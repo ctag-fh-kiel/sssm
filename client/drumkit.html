@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>ssynth - Drumkit</title>
+
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Michroma">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid Sans">
+<link rel="stylesheet" type="text/css" href = "style/sssm.css" />
+
+<script type="text/javascript" src="javascript/socket.io.js"></script>
+<script type="text/javascript" src="javascript/sssm_midi.js"></script>
+<script type="text/javascript" src="javascript/sssm_input.js"></script>
+<script type="text/javascript" src="javascript/sssm_drumkit.js"></script>
+<script type="text/javascript" src="javascript/sssm_synth.js"></script>
+<script type="text/javascript" src="javascript/client.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+    sssm = new SSSM(["drumkit"]);
+};
+</script>
+</head>
+<body>
+<div id="title">
+    WebAudio Drum Machine <span id="version">1.0</span>
+</div>
+<section class="container active" id="pad">
+   
+    <div class="panel">
+            <h2>Steps</h2>
+            <div class="buttons_row" id="LED_row">
+                <span class="label">&nbsp;</span>
+                <div class="pad" id="time"></div>
+                <div class="grid" style="width:323px"></div>
+            </div>
+            <div class="buttons_row">
+                <span class="label">Tom 1</span>
+                <div id="tom1" class="pad"></div>
+                <div class="middle grid">
+                    <div class="column">
+                        <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="00">Tom 1 Pitch</div>
+                    </div>
+                    <div class="column">
+                        <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="01" midi-value="127">
+                    </div>
+                </div>
+            </div>
+            <div class="buttons_row">
+                <span class="label">Tom 2</span>
+                <div id="tom2" class="pad"></div>
+                <div class="middle grid">
+                        <div class="column">
+                                
+                            <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="10">Tom 2 Pitch</div>
+                        </div>
+                    <div class="column">                            
+                    <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="11" midi-value="127">
+                </div>
+                </div>
+            </div>
+            <div class="buttons_row">
+                <span class="label">Tom 3</span>
+                <div id="tom3" class="pad">
+
+                </div>
+                <div class="middle grid">
+                        <div class="column">
+                                
+                        <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="20">Tom 3 Pitch</div>
+                    </div>
+                        <div class="column">
+                                
+                        <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="21" midi-value="127">
+                    </div>
+                  
+                </div>
+            
+            </div>
+            <div class="buttons_row">
+                <span class="label">Hi-Hat</span>
+                <div id="hihat" class="pad">
+                </div>                
+                <div class="middle grid">
+                        <div class="column">
+                                
+                    <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="30">Hihat Pitch</div>
+                </div>
+                    <div class="column">
+                            
+                        <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="31" midi-value="127">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="buttons_row">
+                <span class="label">Snare</span>
+                <div id="snare" class="pad">
+                </div>             
+                <div class="middle grid">
+                        <div class="column">
+                                
+                            <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="40">Snare Pitch</div>
+                        </div>
+                    <div class="column">
+                            
+                        <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="41" midi-value="127">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="buttons_row">
+                <span class="label">Kick</span>
+                <div id="kick" class="pad">
+                </div>                
+                <div class="middle grid">
+                        <div class="column">
+                                
+                    <div sssm-input="slider--x" midi-cc="63" midi-msb="05" midi-lsb="50">Kick Pitch</div> 
+                </div>
+                    <div class="column">
+                            
+                    <input class="button button--mute" type="button" midi-cc="63" sssm-input="button" midi-msb="05" midi-lsb="51" midi-value="127">
+                </div>
+            </div>
+        </div>
+    </div>
+       
+
+</section>
+<section class="container active mCentered" id="params">
+    <div class="grid stackable">
+        <div class="column">
+
+            <div class="panel">
+                <h2>Effect</h2>
+                <div sssm-input="slider--x" midi-cc="22">Wet</div>                            
+                <div class="select">
+                    <span class="label">Type</span>
+                    <select id="effectSelect" midi-cc="23" midi-value="1" sssm-input="select"></select>
+                </div>
+            </div>
+            
+        </div>
+        <div class="column">
+            <div class="panel">
+                <h2>Filter</h2>
+                <div sssm-input="slider--x" midi-cc="30">Freqency</div>                            
+                <div class="select">
+                    <span class="label">Type</span>
+                    <select id="filterSelect" sssm-input="select" midi-cc="32" midi-value="1" name=""></select>  
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid stackable">
+        <div class="column">
+            <div class="panel">
+
+                <h2>Main</h2>
+                <div class="select">
+                    <span class="label">Kit</span>
+                    <select id="kitSelect" midi-cc="13" sssm-input="select"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="11">Swing</div>
+                
+                <div class="select">
+                    <span class="label" id="tempolabel">Tempo</span>
+                    <input sssm-input="input" type="number" min="60" max="180" step="4" value="120" midi-cc="10" midi-value="127">
+                </div>
+                
+                <div class="button button--play" sssm-input="button" midi-sys="a" midi-value="0"></div>
+                <div class="button button--stop" sssm-input="button" midi-sys="c" midi-value="0"></div>            
+            </div>
+        </div>
+        
+    </div>
+</section>
+</body>
+</html>

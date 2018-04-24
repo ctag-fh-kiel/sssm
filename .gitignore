@@ -1,0 +1,4 @@
+node_modules/
+.vscode/
+app/impulse-responses/
+app/sounds

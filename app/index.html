@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="description" content="Create custom drum beats with a few clicks.  Choose from 15 drum kits and 26 effects, and adjust the pitch of each drum.  Save and share your beats… rock on!">
+
+<!-- Our javascript code -->
+<script type="text/javascript" src="src/js/socket.io.js"></script>
+<script type="text/javascript" src="src/js/impulseResponse.js"></script>
+<script type="text/javascript" src="src/js/kit.js"></script>
+<script type="text/javascript" src="src/js/midiController.js"></script>
+<script type="text/javascript" src="src/js/drumkit.js"></script>
+<script type="text/javascript" src="src/js/synth.js"></script>
+<script type="text/javascript" src="src/js/clock.js"></script>
+<script type="text/javascript" src="src/js/sequencer.js"></script>
+<script type="text/javascript" src="lib/konva.min.js"></script>
+<script type="text/javascript" src="src/js/circuit.js"></script>
+<script type="text/javascript" src="src/js/app.js"></script>
+
+</head>
+<body>
+    <div id="ui">
+        <button data-action="addSplitNode">Add Split</button>
+        <button data-action="addMergeNode">Add Merge</button>
+        <button data-action="resetMidiLog">Reset Midi Log</button>
+        <button data-action="clockMode">Switch Clock Mode</button>        
+        <button data-action="startServer">Start Server</button>                
+        <button data-action="findServer">Find Server</button>        
+    </div>
+<div id="circuit">   
+</div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ssynth - Drumkit</title>
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Michroma">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid Sans">
+    <link rel="stylesheet" type="text/css" href="style/sssm.css" />
+
+    <script type="text/javascript" src="javascript/socket.io.js"></script>
+    <script type="text/javascript" src="javascript/sssm_midi.js"></script>
+    <script type="text/javascript" src="javascript/sssm_input.js"></script>
+    <script type="text/javascript" src="javascript/sssm_sequencer.js"></script>
+    <script type="text/javascript" src="javascript/sssm_drumkit.js"></script>
+    <script type="text/javascript" src="javascript/sssm_synth.js"></script>
+    <script type="text/javascript" src="javascript/client.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            sssm = new SSSM(["synth", "sequencer"]);
+        };
+    </script>
+</head>
+
+<body>
+    <div id='title'>
+        SSSM Synthesizer <span id='version'>1.0</span>
+    </div>
+    <section class="container active" id="settings">
+        Midi Channel <select id="channel"></select>
+    </section>
+    <section class='container active' id='pad'>
+        <div class="grid stackable">
+                <div class="column">                    
+                        
+            <div class="panel">
+                <h2>Oscillator 1</h2>
+                <div class="select">
+                    <div class="label">Osc1 Type</div>
+                    <select sssm-input="select" midi-cc="10" class="waveform"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="11" sssm-default="center">Osc1 Gain</div>            
+                <div sssm-input="slider--x" midi-cc="12" sssm-default="center">Osc1 Detune</div>
+            </div>
+            </div>
+            <div class="column">                    
+                    
+            <div class="panel">    
+                <h2>Oscillator 2</h2>
+                <div class="select">
+                    <div class="label">Osc2 Type</div>
+                    <select sssm-input="select" midi-cc="20" class="select__input waveform"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="21" sssm-default="center">Osc2 Gain</div>
+                <div sssm-input="slider--x" midi-cc="22" sssm-default="center">Osc2 Detune</div>
+            </div>
+            </div>
+        </div>
+        <div class="grid stackable">
+                <div class="column">                    
+                        
+            <div class="panel">
+                <h2>Modular Oscillator</h2>
+                <div class="select">
+                    <div class="label">Type</div>
+                    <select sssm-input="select" midi-cc="30" class="waveform"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="31">Frequency</div>
+                <div class="select">
+                    <div class="label">Multiplier</div>
+                    <select sssm-input="select" midi-cc="32" class="multiplier"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="33">Gain</div>
+            </div>
+            </div>
+            <div class="column">                    
+                    
+            <div class="panel">
+                <h2>Cutoff</h2>
+                    
+                <div class="select">
+                    <div class="label">Type</div>
+                    <select sssm-input="select" midi-cc="45" class="filter"></select>
+                </div>
+                <div sssm-input="slider--x" midi-cc="44">Frequency</div>            
+                <div sssm-input="slider--x" midi-cc="46">Resonance</div>            
+            
+            </div>
+            </div>
+        </div>
+        <div class="grid stackable">
+            <div class="column">
+            <div class="panel">
+                    <h2>Filter Envelope</h2>
+                    <div sssm-input="slider--x" midi-cc="05">Attack</div>            
+                    <div sssm-input="slider--x" midi-cc="06">Decay</div>            
+                    <div sssm-input="slider--x" midi-cc="07">Sustain</div>            
+                    <div sssm-input="slider--x" midi-cc="08">Release</div>            
+                    
+            </div>
+            </div>
+            <div class="column">                    
+            <div class="panel">
+                    <h2>AMP Envelope</h2>
+                    <div sssm-input="slider--x" midi-cc="01">Attack</div>            
+                    <div sssm-input="slider--x" midi-cc="02">Decay</div>            
+                    <div sssm-input="slider--x" midi-cc="03">Sustain</div>            
+                    <div sssm-input="slider--x" midi-cc="04">Release</div>  
+            </div>
+            </div>
+        </div>
+    </div>
+        
+    </section>
+    <section class="container active">
+            <div class="panel">
+                    <h2>Keys</h2>
+        <div id="play" class="button hidden button--text">Play</div>
+        <div id="record" class="button hidden button--text">Record</div>
+        <select id="root"></select>
+        <select id="scale"></select>
+        <select id="octave"></select>
+        <div id="clear" class="button button--text">Clear</div>
+        <div id="keys" class="keyboard">        </div>
+    </div>
+    
+    </section>
+    <section class="container active">
+        <div class="panel">
+            <h2>Sequencer</h2>
+            <div id="muteAll" class="button button--text">Silence All</div>
+            <div id="refresh" class="button button--text">Refresh Data</div>
+            <div id="seq_container">
+                <div class="select">
+                    <div class="label">Split</div>
+                    <select id="split_select" class="split"></select>
+                </div>            
+                <div id="col_controller" class="col_controller"></div>
+                <div id="row_controller" class="row_controller"></div>
+                <div id="sequencer"></div>
+            </div>
+        </div>
+    </section>
+   
+</body>
+
+</html>
